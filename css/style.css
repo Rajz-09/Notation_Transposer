@@ -1,0 +1,186 @@
+/* Body Styling for All Screens */
+body {
+    font-family: 'Poppins', sans-serif;
+    background-color: #e0f7fa;
+    margin: 0;
+    padding: 0;
+}
+
+/* Container Styling */
+.container {
+    max-width: 80%;
+    margin: 50px auto;
+    background: linear-gradient(135deg, #b2dfdb, #80deea);
+    padding: 30px;
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.3);
+    border-radius: 15px;
+    border: 2px solid #004d40;
+    height: calc(100vh - 100px); /* Adjust container height relative to viewport height */
+    overflow-y: auto; /* Add scrolling inside the container if content overflows */
+}
+
+.flute-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 4.5rem; /* Match this to h1 font-size */
+    margin-bottom: 20px; /* Optional: Adds some space between the image and the content below */
+}
+
+.flute-container img {
+    transform: rotate(180deg);
+    height: 50%; /* Ensure the height of the image matches the container height */
+    width: 42%; /* Maintain the aspect ratio */
+    max-height: 4.5rem; /* Ensure the image does not exceed the height of the heading */
+}
+
+
+/* Heading Styling */
+h1 {
+    font-size: 4.5rem;
+    font-weight: 900;
+    font-family: 'Abril Fatface', cursive;
+    text-align: center;
+    letter-spacing: 0.1em;
+    color: #ffffff;
+    background: linear-gradient(135deg, #520681, #ac4de7, #520681);
+    -webkit-background-clip: text;
+    color: transparent;
+}
+
+.flute-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 4.5rem; /* Match this to h1 font-size */
+}
+
+svg {
+    width: 100%; /* Full width */
+    height: 100%; /* Full height to match heading */
+    max-width: 100%; /* Prevent overflow */
+    max-height: 100%; /* Prevent overflow */
+}
+
+/* Button Styling */
+button {
+    background: linear-gradient(135deg, #007B5F, #00A99D, #4D6E91);
+    color: white;
+    padding: 2px 15px;
+    border: none;
+    cursor: pointer;
+    border-radius: 50px;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+}
+
+button:hover {
+    background: linear-gradient(135deg, #00bcd4, #004d40);
+    transform: scale(1.05);
+}
+
+#convert-button {
+    padding: 5px 0px;
+    font-size: 1.7em;
+    font-weight: 700;
+}
+button#copy-input-button, button#copy-output-button{
+    box-shadow: none;
+}
+
+/* Textarea Styling */
+textarea {
+    font-family: 'Courier New', monospace;
+    font-size: 1.3em;
+    color: #004d40;
+    border-radius: 8px;
+    padding: 10px;
+    border: 2px solid #007B5F;
+}
+
+.styled-link {
+    font-size: 24px; /* Larger font size */
+    color: brown; /* Custom color */
+    /* text-decoration: none;  */
+    transition: color 0.3s ease;
+    font-weight: bolder;
+    font-size: 2em;
+    display: flex;
+    justify-content: center; /* Centers horizontally */
+    align-items: center; /* Centers vertically */
+    margin: 0 auto; /* Ensure the link container is centered */
+    width: fit-content; /* Ensure the link doesn't stretch unnecessarily */
+}
+
+/* Hover effect to make it more interactive */
+.styled-link:hover {
+    color: #0056b3; /* Slightly darker color on hover */
+}
+
+
+/* Responsive Styling */
+@media (max-width: 768px) {
+    .container {
+        max-width: 95%;
+        padding: 15px;
+    }
+
+    h1 {
+        font-size: 3rem;
+    }
+
+    textarea {
+        font-size: 1.1em;
+    }
+
+    button {
+        font-size: 1.2em;
+    }
+
+    button#copy-input-button, button#copy-output-button {
+        font-size: 0.9em;
+        padding: 5px;
+        width:80%;
+        box-shadow: none;
+    }
+
+    .flute-container img {
+        max-height: 3.5rem; 
+        width: 100%;
+    }
+}
+
+@media (max-width: 480px) {
+    .container {
+        max-width: 100%;
+        padding: 10px;
+    }
+
+    h1 {
+        font-size: 2.5rem;
+        font-weight: 800;
+    }
+
+    button {
+        width: 100%;
+        margin-top: 10px;
+        padding: 7px;
+    } 
+
+    textarea {
+        font-size: 1em;
+    }
+
+    button#copy-input-button, button#copy-output-button {
+        font-size: 0.7em;
+        padding: 3px;
+        width: 30%;
+        justify-content: center;
+        box-shadow: none;
+    }
+
+    .flute-container img {
+        max-height: 2.5rem; 
+        width: 100%;
+    }
+}

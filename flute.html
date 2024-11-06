@@ -1,0 +1,567 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Poppins:wght@400;600&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.1.3/css/bootstrap.min.css">
+
+    <title>Interactive Bansuri Fingering Chart</title>
+    <style>
+        /* Styling for body */
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #89f7fe 30%, #66a6ff 100%);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        /* Transposer Container */
+        .transposer-container {
+            background-color: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.2);
+            text-align: center;
+            width: 80%;
+            max-width: 500px;
+            animation: fadeIn 0.8s ease-in-out;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 30px;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .title {
+            text-align: center;
+            color: #2c3e50;
+            margin-bottom: 30px;
+            font-size: 2.2em;
+        }
+
+        #flute-container {
+            display: flex;
+            align-items: center;
+            gap: 40px;
+            margin: 40px 0;
+        }
+
+        #flute {
+            margin: auto;
+            display: block;
+            filter: drop-shadow(0 4px 6px rgba(0, 0, 0, 0.1));
+        }
+
+        .hole {
+            stroke: #2c3e50;
+            stroke-width: 1.5;
+            transition: all 0.3s ease;
+        }
+
+        .half-open {
+            fill: #864606;
+        }
+
+        .open {
+            fill: #ffffff;
+        }
+
+        .half-closed {
+            fill: #95a5a6;
+        }
+
+        .closed {
+            fill: #2c3e50;
+        }
+
+        .legend {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin: 30px 0;
+            padding: 15px;
+            background: #f8f9fa;
+            border-radius: 8px;
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 1.2em;
+            color: #34495e;
+        }
+
+        .legend-symbol {
+            width: 24px;
+            height: 24px;
+            /* border: 1px solid #2c3e50; */
+            border-radius: 50%;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .signature-text {
+            font-family: 'Dancing Script', cursive;
+            font-size: 28px;
+            fill: #34495e;
+            filter: drop-shadow(1px 1px 1px rgba(0, 0, 0, 0.2));
+        }
+
+        #note-display {
+            text-align: center;
+            margin-top: 30px;
+            padding: 15px;
+            background: #f8f9fa;
+            border-radius: 8px;
+        }
+
+        #current-note {
+            color: #2c3e50;
+            margin: 0;
+            font-size: 1.8em;
+            font-weight: bolder;
+        }
+
+        .button-group h3 {
+            color: #2c3e50;
+            margin-bottom: 15px;
+        }
+
+        .btn-group .btn {
+            margin: 5px;
+            font-weight: 600;
+            border-radius: 5px;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+            transition: transform 0.2s ease;
+        }
+
+        .btn-group .btn:hover {
+            transform: scale(1.05);
+        }
+
+        #octave-select {
+            font-size: 1.5em;
+            font-weight: bolder;
+        }
+
+        .back-link {
+            font-size: 24px;
+            color: brown;
+            /* Custom color */
+            text-decoration: none;
+            transition: color 0.3s ease;
+            font-weight: bolder;
+            font-size: 2em;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 0 auto;
+            width: fit-content;
+        }
+
+        .styled-link:hover {
+            color: #0056b3;
+        }
+
+        /* Base styling for SVG and other elements */
+        #flute {
+            width: 100%;
+            height: auto;
+        }
+
+        /* Media Query for screens up to 480px */
+        @media (max-width: 480px) {
+            .transposer-container {
+                width: 90%;
+                padding: 20px;
+            }
+
+            .title {
+                font-size: 1.6em;
+            }
+
+            option-container {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                padding: 10px;
+            }
+
+            .option-container .option {
+                display: flex;
+                align-items: center;
+                margin: 5px 0;
+            }
+
+            .blowing-point {
+                margin-bottom: 10px;
+            }
+
+            .option-label {
+                font-size: 14px;
+                margin-left: 5px;
+            }
+
+            #flute {
+                width: 80%;
+                height: auto;
+            }
+
+            #flute-container {
+                flex-direction: column;
+                gap: 20px;
+                margin: 20px 0;
+            }
+
+            .legend {
+                flex-direction: column;
+                gap: 15px;
+            }
+
+            #note-display h2 {
+                font-size: 1.5em;
+            }
+
+            .btn-group {
+                display: flex;
+                flex-wrap: wrap;
+                justify-content: center;
+                gap: 5px;
+                /* Add some space between buttons */
+            }
+
+            .btn-group .btn {
+                flex: 1 1 30%;
+                /* Make buttons take 30% of the width, adjust if needed */
+                font-size: 0.9em;
+                padding: 8px 10px;
+                /* Adjust padding for smaller screens */
+            }
+        }
+
+        /* Media Query for screens up to 768px */
+        @media (max-width: 768px) {
+            .transposer-container {
+                width: 85%;
+                padding: 25px;
+            }
+
+            .title {
+                font-size: 1.8em;
+            }
+
+            .options-group {
+                display: flex;
+                flex-wrap: wrap;
+                /* Allow wrapping to the next line */
+                gap: 15px;
+                justify-content: center;
+            }
+
+            .options-group label {
+                font-size: 1em;
+            }
+
+            .options-group .option {
+                display: flex;
+                align-items: center;
+                gap: 8px;
+                /* Space between radio and label */
+            }
+
+            #flute {
+                width: 70%;
+                /* Adjust SVG size for tablet view */
+                height: auto;
+            }
+
+            #flute-container {
+                flex-direction: column;
+                gap: 25px;
+                margin: 25px 0;
+            }
+
+            .legend {
+                flex-direction: row;
+                gap: 20px;
+            }
+
+            #note-display h2 {
+                font-size: 1.6em;
+            }
+
+            /* Button group styling */
+            .btn-group {
+                display: flex;
+                flex-wrap: wrap;
+                justify-content: center;
+                gap: 8px;
+                /* Add space between buttons */
+            }
+
+            .btn-group .btn {
+                flex: 1 1 20%;
+                /* Make buttons take 20% of the width to fit more on each row */
+                font-size: 1em;
+                padding: 10px 12px;
+                /* Adjust padding for better readability */
+            }
+
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container transposer-container">
+        <h1 class="title">Interactive Bansuri Fingering Chart</h1>
+
+        <div class="legend">
+            <div class="legend-item">
+                <div class="legend-symbol half-open" style="background-color: #864606"></div>
+                <span>Blowing Point</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-symbol open" style="border: 1px solid #2c3e50;"></div>
+                <span>Open</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-symbol half-closed" style="background-color: #95a5a6;"></div>
+                <span>Half Closed</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-symbol closed" style="background-color: #2c3e50;"></div>
+                <span>Closed</span>
+            </div>
+        </div>
+
+        <svg id="flute" viewBox="0 0 700 80" width="800px" height="80px">
+            <!-- Definitions for gradients -->
+            <defs>
+                <linearGradient id="woodGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+                    <stop offset="0%" style="stop-color:#D4B08C;stop-opacity:1" />
+                    <stop offset="50%" style="stop-color:#E5C09F;stop-opacity:1" />
+                    <stop offset="100%" style="stop-color:#D4B08C;stop-opacity:1" />
+                </linearGradient>
+                <linearGradient id="endCapGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+                    <stop offset="0%" style="stop-color:#2F2F2F;stop-opacity:1" />
+                    <stop offset="100%" style="stop-color:#4F4F4F;stop-opacity:1" />
+                </linearGradient>
+            </defs>
+
+            <!-- End caps with rounded corners -->
+            <rect x="0" y="10" width="35" height="60" fill="url(#endCapGradient)" rx="10" ry="10" />
+            <rect x="645" y="10" width="35" height="60" fill="url(#endCapGradient)" rx="10" ry="10" />
+
+            <!-- Main flute body with rounded corners -->
+            <rect x="30" y="10" width="620" height="60" fill="url(#woodGradient)" rx="10" ry="10" />
+
+            <!-- Holes -->
+            <circle cx="80" cy="40" r="12" fill="#864606" />
+
+            <!-- Rajz text with rotation -->
+            <text class="signature-text" x="120" y="55" transform="rotate(-12, 110, 20)"
+                style="font-size: 23px;">ॐ</text>
+            <circle class="hole" cx="200" cy="40" r="12" />
+            <circle class="hole" cx="270" cy="40" r="12" />
+            <circle class="hole" cx="340" cy="40" r="12" />
+            <circle class="hole" cx="410" cy="40" r="12" />
+            <circle class="hole" cx="480" cy="40" r="12" />
+            <circle class="hole" cx="560" cy="40" r="12" />
+        </svg>
+
+        <div id="note-display" class="mb-4" style="text-align: center; margin-top: 20px; ">
+            <h2 id="current-note">Sa</h2>
+        </div>
+        <div class="mb-3">
+            <h3>Select an Octave</h3>
+            <select id="octave-select" class="form-select">
+                <option value="middle_octave">મધ્ય સપ્તક (Middle Octave)</option>
+                <option value="lowest_octave">મન્દ્ર સપ્તક (Lowest Octave)</option>
+                <option value="high_octave">તાર સપ્તક (High Octave)</option>
+                <!-- <option value="top_octave">અતિતાર સપ્તક (Top)</option> -->
+            </select>
+        </div>
+        <div class="button-group text-center mb-4">
+            <h3>Select a Note</h3>
+            <div class="btn-group btn-group-lg mb-3" role="group" aria-label="Basic example">
+                <button id="btn-Sa" type="button" class="btn btn-primary" onclick="updateFingering('Sa')">Sa</button>
+                <button id="btn-re" type="button" class="btn btn-info" onclick="updateFingering('re')">re</button>
+                <button id="btn-Re" type="button" class="btn btn-success" onclick="updateFingering('Re')">Re</button>
+                <button id="btn-ga" type="button" class="btn btn-danger" onclick="updateFingering('ga')">ga</button>
+                <button id="btn-Ga" type="button" class="btn btn-warning" onclick="updateFingering('Ga')">Ga</button>
+                <button id="btn-ma" type="button" class="btn btn-dark" onclick="updateFingering('ma')">ma</button>
+                <button id="btn-Ma" type="button" class="btn btn-primary" onclick="updateFingering('Ma')">Ma</button>
+                <button id="btn-Pa" type="button" class="btn btn-info" onclick="updateFingering('Pa')">Pa</button>
+                <button id="btn-dha" type="button" class="btn btn-success" onclick="updateFingering('dha')">dha</button>
+                <button id="btn-Dha" type="button" class="btn btn-danger" onclick="updateFingering('Dha')">Dha</button>
+                <button id="btn-ni" type="button" class="btn btn-warning" onclick="updateFingering('ni')">ni</button>
+                <button id="btn-Ni" type="button" class="btn btn-dark" onclick="updateFingering('Ni')">Ni</button>
+            </div>
+            <a href="./index.html" class="back-link" style="margin-top: 20px;">Back to Notes</a>
+        </div>
+
+    </div>
+    <script>
+        const fingeringPatterns = [
+            {
+                "note": "Sa",
+                "lowest_octave": null,
+                "middle_octave": [2, 2, 2, 0, 0, 0],
+                "high_octave": [2, 2, 2, 0, 0, 0],
+                // "top_octave": [2, 2, 0, 2, 1, 0, 0]
+            },
+            {
+                "note": "re",
+                "lowest_octave": null,
+                "middle_octave": [2, 2, 1, 0, 0, 0],
+                "high_octave": [2, 2, 1, 0, 0, 0],
+                // "top_octave": [2, 0, 0, 2, 0, 0, 0]
+            },
+            {
+                "note": "Re",
+                "lowest_octave": null,
+                "middle_octave": [2, 2, 0, 0, 0, 0],
+                "high_octave": [2, 2, 0, 0, 0, 0],
+                // "top_octave": [2, 0, 2, 2, 2, 2, 0]
+            },
+            {
+                "note": "ga",
+                "lowest_octave": null,
+                "middle_octave": [2, 1, 0, 0, 0, 0],
+                "high_octave": [2, 1, 0, 0, 0, 0],
+                // "top_octave": null
+            },
+            {
+                "note": "Ga",
+                "lowest_octave": null,
+                "middle_octave": [2, 0, 0, 0, 0, 0],
+                "high_octave": [2, 0, 0, 0, 0, 0],
+                // "top_octave": null
+            },
+            {
+                "note": "ma",
+                "lowest_octave": null,
+                "middle_octave": [1, 0, 0, 0, 0, 0],
+                "high_octave": [1, 0, 0, 0, 0, 0],
+                // "top_octave": null
+            },
+            {
+                "note": "Ma",
+                "lowest_octave": [2, 2, 2, 2, 2, 2],
+                "middle_octave": [0, 0, 0, 0, 0],
+                "high_octave": [0, 0, 0, 0, 0, 0],
+                // "top_octave": null
+            },
+            {
+                "note": "Pa",
+                "lowest_octave": [2, 2, 2, 2, 2, 2],
+                "middle_octave": [2, 2, 2, 2, 2, 2],
+                "high_octave": [2, 2, 2, 2, 2, 2],
+                // "top_octave": null
+            },
+            {
+                "note": "dha",
+                "lowest_octave": [2, 2, 2, 2, 2, 1],
+                "middle_octave": [2, 2, 2, 2, 2, 1],
+                "high_octave": [2, 2, 1, 0, 0, 2],
+                // "top_octave": null
+            },
+            {
+                "note": "Dha",
+                "lowest_octave": [2, 2, 2, 2, 2, 0],
+                "middle_octave": [2, 2, 2, 2, 2, 0],
+                "high_octave": [2, 2, 2, 0, 0, 0, 2],
+                // "top_octave": null
+            },
+            {
+                "note": "ni",
+                "lowest_octave": [2, 2, 2, 2, 1, 0],
+                "middle_octave": [2, 2, 2, 2, 1, 0],
+                "high_octave": [2, 1, 0, 0, 0, 2],
+                // "top_octave": null
+            },
+            {
+                "note": "Ni",
+                "lowest_octave": [2, 2, 2, 2, 0, 0],
+                "middle_octave": [2, 2, 2, 2, 0, 0],
+                "high_octave": [2, 1, 2, 2, 2, 2],
+                // "top_octave": null
+            }
+        ];
+
+        document.getElementById("octave-select").addEventListener("change", function () {
+            const octave = this.value;
+
+            // Enable all buttons first
+            const buttons = document.querySelectorAll('.btn-group .btn');
+            buttons.forEach(button => {
+                button.removeAttribute('disabled');
+            });
+
+            // If the lowest octave is selected, disable certain buttons
+            if (octave === "lowest_octave") {
+                document.getElementById("btn-Sa").setAttribute('disabled', true);
+                document.getElementById("btn-re").setAttribute('disabled', true);
+                document.getElementById("btn-Re").setAttribute('disabled', true);
+                document.getElementById("btn-ga").setAttribute('disabled', true);
+                document.getElementById("btn-Ga").setAttribute('disabled', true);
+                document.getElementById("btn-ma").setAttribute('disabled', true);
+                document.getElementById("btn-Ma").setAttribute('disabled', true);
+            }
+            // If the higher octave is selected, disable certain buttons
+            if (octave === "high_octave") {
+                document.getElementById("btn-Ma").setAttribute('disabled', true);
+                document.getElementById("btn-dha").setAttribute('disabled', true);
+                document.getElementById("btn-Dha").setAttribute('disabled', true);
+                document.getElementById("btn-ni").setAttribute('disabled', true);
+                document.getElementById("btn-Ni").setAttribute('disabled', true);
+            }
+        });
+
+
+
+        function updateFingering(note) {
+            const octave = document.getElementById("octave-select").value;
+            const pattern = fingeringPatterns.find(item => item.note === note)?.[octave];
+
+            if (!pattern) {
+                document.getElementById("current-note").textContent = `No pattern found for ${note} in ${octave}`;
+                return;
+            }
+
+            // Update holes based on the pattern
+            const holes = document.querySelectorAll(".hole");
+            pattern.forEach((state, index) => {
+                holes[index].classList.remove("open", "half-closed", "closed");
+                if (state === 2) {
+                    holes[index].classList.add("closed");
+                } else if (state === 1) {
+                    holes[index].classList.add("half-closed");
+                } else {
+                    holes[index].classList.add("open");
+                }
+            });
+
+            // Display the current note
+            document.getElementById("current-note").textContent = `${note} (${octave})`;
+        }
+
+        // Example usage
+        updateFingering("Sa");
+        // Initialize with 'Sa'
+        // updateFingering("Sa");
+    </script>
+</body>
+
+</html>
