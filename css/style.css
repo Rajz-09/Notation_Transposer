@@ -119,36 +119,7 @@ textarea {
 
 
 /* Responsive Styling */
-@media (max-width: 768px) {
-    .container {
-        max-width: 95%;
-        padding: 15px;
-    }
 
-    h1 {
-        font-size: 3rem;
-    }
-
-    textarea {
-        font-size: 1.1em;
-    }
-
-    button {
-        font-size: 1.2em;
-    }
-
-    button#copy-input-button, button#copy-output-button {
-        font-size: 0.9em;
-        padding: 5px;
-        width:80%;
-        box-shadow: none;
-    }
-
-    .flute-container img {
-        max-height: 3.5rem; 
-        width: 100%;
-    }
-}
 
 @media (max-width: 480px) {
     .container {
@@ -180,7 +151,83 @@ textarea {
     }
 
     .flute-container img {
-        max-height: 2.5rem; 
+        max-height: 2rem; 
         width: 100%;
     }
 }
+
+@media (max-width: 768px) {
+    .container {
+        max-width: 95%;
+        padding: 15px;
+    }
+
+    h1 {
+        font-size: 3rem;
+    }
+
+    textarea {
+        font-size: 1.1em;
+    }
+
+    button {
+        font-size: 1.2em;
+    }
+
+    button#copy-input-button, button#copy-output-button {
+        font-size: 0.9em;
+        padding: 5px;
+        width:80%;
+        box-shadow: none;
+    }
+
+    .flute-container img {
+        max-height: 3.5rem; 
+        width: 100%;
+    }
+}
+
+@media (min-width: 769px) {
+    .container {
+        max-width: 90%;
+        padding: 40px;
+        margin: 60px auto;
+    }
+
+    h1 {
+        font-size: 5rem;
+        font-weight: 900;
+    }
+
+    button {
+        font-size: 1.4em;
+        padding: 10px 20px;
+    }
+
+    #convert-button {
+        padding: 10px 20px;
+        font-size: 1.8em;
+        font-weight: 700;
+    }
+
+    textarea {
+        font-size: 1.4em;
+    }
+
+    button#copy-input-button,
+    button#copy-output-button {
+        font-size: 1em;
+        padding: 8px 15px;
+        width: auto;
+    }
+
+    .flute-container img {
+        max-height: 5rem;
+        width: 100%;
+    }
+
+    .styled-link {
+        font-size: 2.5em;
+    }
+}
+

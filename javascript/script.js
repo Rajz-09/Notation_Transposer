@@ -14,7 +14,7 @@ const swaraToWestern = {
     'N': 'B'
 };
 
-// Reverse the map to get Western to Swara mappings.
+// Reverse map to get Western to Swara mappings.
 const westernToSwara = Object.fromEntries(
     Object.entries(swaraToWestern).map(([key, value]) => [value, key])
 );
@@ -52,56 +52,30 @@ function updateToScaleOptions(fromScaleRoot) {
     });
 }
 
-// Function to calculate the difference (interval) between two root notes.
+// Function to calculate the interval (difference in semitones) between two root notes.
 function calculateInterval(fromRoot, toRoot) {
     const fromIndex = westernNotes.indexOf(fromRoot);
     const toIndex = westernNotes.indexOf(toRoot);
-    let interval = toIndex - fromIndex;
-
-    // Adjust interval for negative values to wrap around.
-    if (interval < 0) {
-        interval += westernNotes.length;
-    }
-
-    return interval;
+    return (toIndex - fromIndex + 12) % 12;
 }
 
-// Function to shift the Western scale based on the interval.
-function shiftScale(scale, interval) {
-    return scale.map(note => {
-        let noteIndex = westernNotes.indexOf(note);
-        return westernNotes[(noteIndex + interval) % westernNotes.length];
+// Function to transpose notes by the calculated interval, considering octave indicators.
+function transposeNotesWithOctave(notes, interval) {
+    return notes.map(note => {
+        const baseSwara = note.replace(/['|,]+/g, ''); // Extract base swara
+        const octaveIndicator = note.replace(baseSwara, ''); // Extract octave symbols
+        const westernNote = swaraToWestern[baseSwara];
+        
+        if (!westernNote) return note; // Skip if not a valid swara
+
+        const originalIndex = westernNotes.indexOf(westernNote);
+        const transposedIndex = (originalIndex + interval) % westernNotes.length;
+        const transposedNote = westernNotes[transposedIndex];
+
+        // Convert back to swara with the octave symbol.
+        const convertedSwara = westernToSwara[transposedNote] || transposedNote;
+        return convertedSwara + octaveIndicator;
     });
-}
-
-// Function to create a conversion map between two scales.
-function getConversionMap(fromRoot, toRoot) {
-    const fromScale = generateScale(fromRoot, majorPattern);
-    const interval = calculateInterval(fromRoot, toRoot);
-
-    // Shift the Western notes based on the interval to get the target scale.
-    const shiftedScale = shiftScale(fromScale, interval);
-
-    // Create a mapping between swaras of the 'from' scale to notes in the 'to' scale.
-    const map = {};
-    fromScale.forEach((note, index) => {
-        const swara = westernToSwara[note];
-        if (swara) {
-            map[swara] = westernToSwara[shiftedScale[index]];
-        }
-    });
-
-    return map;
-}
-
-// Function to convert a swara notation with octave.
-function convertWithOctave(word, conversionMap) {
-    const baseSwara = word.replace(/['|,]+/g, ''); // Extract the base swara.
-    const octaveIndicator = word.replace(baseSwara, ''); // Extract octave symbols.
-    const convertedBaseSwara = conversionMap[baseSwara] || baseSwara; // Convert swara.
-
-    // Return converted swara with original octave.
-    return convertedBaseSwara + octaveIndicator;
 }
 
 // Event listener for the 'from-scale' dropdown.
@@ -115,15 +89,15 @@ document.getElementById('convert-button').addEventListener('click', () => {
     const fromScaleRoot = document.getElementById('from-scale').value; // Get root note of the input scale.
     const toScaleRoot = document.getElementById('to-scale').value; // Get root note of the output scale.
 
-    // Create a conversion map between the scales.
-    const conversionMap = getConversionMap(fromScaleRoot, toScaleRoot);
+    // Calculate the interval for transposing.
+    const interval = calculateInterval(fromScaleRoot, toScaleRoot);
 
-    // Process the input notation and convert it using the selected conversion map.
+    // Process the input notation and transpose each note.
     const lines = inputNotation.split('\n');
     const outputLines = lines.map(line => {
         const words = line.split(' ');
-        const convertedWords = words.map(word => convertWithOctave(word, conversionMap));
-        return convertedWords.join(' ');
+        const transposedWords = transposeNotesWithOctave(words, interval);
+        return transposedWords.join(' ');
     });
 
     // Set the output notation.

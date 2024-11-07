@@ -11,217 +11,161 @@
 
     <title>Interactive Bansuri Fingering Chart</title>
     <style>
-        /* Styling for body */
+        :root {
+            --primary-color: #2c3e50;
+            --bg-gradient-start: #b2dfdb;
+            --bg-gradient-end: #80deea;
+            --wood-color-light: #E5C09F;
+            --wood-color-dark: #D4B08C;
+            --border-radius: 15px;
+        }
+
         body {
             font-family: 'Poppins', sans-serif;
-            background: linear-gradient(135deg, #89f7fe 30%, #66a6ff 100%);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
+            background: linear-gradient(135deg, var(--bg-gradient-start), var(--bg-gradient-end));
+            min-height: 100vh;
             margin: 0;
+            padding: 20px;
+            display: grid;
+            place-items: center;
         }
-    
-        /* Transposer Container */
+
         .transposer-container {
             background-color: white;
-            padding: 30px;
-            border-radius: 15px;
+            padding: 2rem;
+            border-radius: var(--border-radius);
             box-shadow: 0 4px 30px rgba(0, 0, 0, 0.2);
-            text-align: center;
-            width: 80%;
-            max-width: 800px;
+            width: min(90%, 800px);
+            margin: auto;
             animation: fadeIn 0.8s ease-in-out;
         }
-    
-        .container {
-            max-width: 900px;
-            margin: 0 auto;
-            padding: 30px;
-            background: white;
-            border-radius: 10px;
-            box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
         }
-    
+
         .title {
+            color: var(--primary-color);
+            margin-bottom: 1.5rem;
+            font-size: clamp(1.5rem, 4vw, 2.2rem);
             text-align: center;
-            color: #2c3e50;
-            margin-bottom: 30px;
-            font-size: 2.2em;
         }
-    
-        #flute-container {
-            display: flex;
-            align-items: center;
-            gap: 40px;
-            margin: 40px 0;
-        }
-    
-        #flute {
-            margin: auto;
-            display: block;
-            filter: drop-shadow(0 4px 6px rgba(0, 0, 0, 0.1));
-            width: 100%;
-            height: auto;
-        }
-    
-        .hole {
-            stroke: #2c3e50;
-            stroke-width: 1.5;
-            transition: all 0.3s ease;
-        }
-    
-        .half-open {
-            fill: #864606;
-        }
-    
-        .open {
-            fill: #ffffff;
-        }
-    
-        .half-closed {
-            fill: #95a5a6;
-        }
-    
-        .closed {
-            fill: #2c3e50;
-        }
-    
+
         .legend {
             display: flex;
+            flex-wrap: wrap;
             justify-content: center;
-            gap: 30px;
-            margin: 30px 0;
-            padding: 15px;
+            gap: 1rem;
+            margin: 1.5rem 0;
+            padding: 1rem;
             background: #f8f9fa;
             border-radius: 8px;
         }
-    
+
         .legend-item {
             display: flex;
             align-items: center;
-            gap: 10px;
-            font-size: 1.2em;
-            color: #34495e;
+            gap: 0.5rem;
+            font-size: clamp(0.875rem, 2vw, 1.2rem);
         }
-    
+
         .legend-symbol {
             width: 24px;
             height: 24px;
             border-radius: 50%;
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
         }
-    
-        .signature-text {
-            font-family: 'Dancing Script', cursive;
-            font-size: 28px;
-            fill: #34495e;
-            filter: drop-shadow(1px 1px 1px rgba(0, 0, 0, 0.2));
+
+        #flute {
+            max-width: 100%;
+            height: auto;
+            filter: drop-shadow(0 4px 6px rgba(0, 0, 0, 0.1));
         }
-    
+
+        .hole {
+            transition: fill 0.3s ease;
+        }
+
+        .hole.open { fill: #ffffff; }
+        .hole.half-closed { fill: #95a5a6; }
+        .hole.closed { fill: var(--primary-color); }
+
         #note-display {
             text-align: center;
-            margin-top: 30px;
-            padding: 15px;
+            margin: 1.5rem 0;
+            padding: 1rem;
             background: #f8f9fa;
             border-radius: 8px;
         }
-    
+
         #current-note {
-            color: #2c3e50;
             margin: 0;
-            font-size: 1.8em;
-            font-weight: bolder;
+            font-size: clamp(1.2rem, 3vw, 1.6rem);
+            font-weight: bold;
+            color: var(--primary-color);
         }
-    
-        .button-group h3 {
-            color: #2c3e50;
-            margin-bottom: 15px;
+
+        .octave-select-container {
+            margin: 1.5rem 0;
         }
-    
-        .btn-group .btn {
-            margin: 5px;
-            font-weight: 600;
-            border-radius: 5px;
-            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
-            transition: transform 0.2s ease;
-        }
-    
-        .btn-group .btn:hover {
-            transform: scale(1.05);
-        }
-    
+
         #octave-select {
-            font-size: 1.5em;
-            font-weight: bolder;
+            width: 100%;
+            padding: 0.5rem;
+            font-size: 1rem;
+            border-radius: 8px;
+            border: 2px solid #dee2e6;
         }
-    
-        .back-link {
-            font-size: 24px;
-            color: brown;
-            text-decoration: none;
-            transition: color 0.3s ease;
-            font-weight: bolder;
-            font-size: 2em;
+
+        .btn-group {
             display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
             justify-content: center;
-            align-items: center;
-            margin: 0 auto;
-            width: fit-content;
         }
-    
+
+        .btn-group .btn {
+            flex: 1 1 calc(25% - 0.5rem);
+            min-width: 60px;
+            margin: 0;
+            font-weight: 600;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .btn-group .btn:hover:not([disabled]) {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+        }
+
+        .btn-group .btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+
+        .back-link {
+            display: block;
+            margin-top: 2rem;
+            text-align: center;
+            color: var(--primary-color);
+            font-size: clamp(1.5rem, 3vw, 2rem);
+            text-decoration: none;
+            font-weight: bold;
+            transition: color 0.3s ease;
+        }
+
         .back-link:hover {
             color: #0056b3;
         }
-    
-        /* Media query for responsive design */
-        @media (max-width: 767px) {
-            .transposer-container {
-                width: 90%;
-                max-width: 500px;
-            }
-    
-            #flute {
-                width: 100%;
-                height: auto;
-            }
-    
-            .legend {
-                flex-wrap: wrap;
-                justify-content: center;
-            }
-    
-            .legend-item {
-                font-size: 1em;
-            }
-    
-            .legend-symbol {
-                width: 20px;
-                height: 20px;
-            }
-    
-            .btn-group {
-                display: flex;
-                flex-wrap: wrap;
-                justify-content: center;
-                gap: 8px;
-                /* Add space between buttons */
-            }
 
+        @media (min-width: 768px) {
             .btn-group .btn {
-                flex: 1 1 20%;
-                /* Make buttons take 20% of the width to fit more on each row */
-                font-size: 1em;
-                padding: 10px 12px;
-                /* Adjust padding for better readability */
+                flex: 0 1 auto;
             }
-    
-            #octave-select {
-                font-size: 1.2em;
-            }
-    
-            .back-link {
-                font-size: 1.8em;
+            
+            .legend {
+                gap: 2rem;
             }
         }
     </style>
@@ -289,7 +233,7 @@
             <h2 id="current-note">Sa</h2>
         </div>
         <div class="mb-3">
-            <h3>Select an Octave</h3>
+            <h5 style="text-align: start;">Select an Octave</h5>
             <select id="octave-select" class="form-select">
                 <option value="middle_octave">મધ્ય સપ્તક (Middle Octave)</option>
                 <option value="lowest_octave">મન્દ્ર સપ્તક (Lowest Octave)</option>
@@ -297,8 +241,8 @@
                 <!-- <option value="top_octave">અતિતાર સપ્તક (Top)</option> -->
             </select>
         </div>
-        <div class="button-group text-center mb-4">
-            <h3>Select a Note</h3>
+        <div class="button-group mb-4">
+            <h5 style="text-align: start; margin-top: 20px;">Click a Note</h5>
             <div class="btn-group btn-group-lg mb-3" role="group" aria-label="Basic example">
                 <button id="btn-Sa" type="button" class="btn btn-primary" onclick="updateFingering('Sa')">Sa</button>
                 <button id="btn-re" type="button" class="btn btn-info" onclick="updateFingering('re')">re</button>
