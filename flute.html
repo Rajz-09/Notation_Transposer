@@ -41,8 +41,15 @@
         }
 
         @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
 
         .title {
@@ -78,18 +85,30 @@
         }
 
         #flute {
-            max-width: 100%;
+            width: 80%;
+            max-width: 700px;
             height: auto;
+            margin: 20px auto;
+            display: block;
             filter: drop-shadow(0 4px 6px rgba(0, 0, 0, 0.1));
         }
+
 
         .hole {
             transition: fill 0.3s ease;
         }
 
-        .hole.open { fill: #ffffff; }
-        .hole.half-closed { fill: #95a5a6; }
-        .hole.closed { fill: var(--primary-color); }
+        .hole.open {
+            fill: #ffffff;
+        }
+
+        .hole.half-closed {
+            fill: #95a5a6;
+        }
+
+        .hole.closed {
+            fill: var(--primary-color);
+        }
 
         #note-display {
             text-align: center;
@@ -163,9 +182,41 @@
             .btn-group .btn {
                 flex: 0 1 auto;
             }
-            
+
             .legend {
                 gap: 2rem;
+            }
+        }
+
+        /* Small screens (up to 576px wide) */
+        @media (max-width: 576px) {
+            #flute {
+                width: 100%;
+                max-width: 400px;
+            }
+        }
+
+        /* Medium screens (between 577px and 768px) */
+        @media (min-width: 577px) and (max-width: 768px) {
+            #flute {
+                width: 90%;
+                max-width: 600px;
+            }
+        }
+
+        /* Large screens (between 769px and 992px) */
+        @media (min-width: 769px) and (max-width: 992px) {
+            #flute {
+                width: 90%;
+                max-width: 800px;
+            }
+        }
+
+        /* Extra-large screens (993px and up) */
+        @media (min-width: 993px) {
+            #flute {
+                width: 100%;
+                max-width: 1000px;
             }
         }
     </style>
