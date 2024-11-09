@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,12 +9,13 @@
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="css/style.css">
 </head>
+
 <body>
     <div class="container mt-5">
         <h1>SWAR PARIVRITTI</h1>
-            <div class="flute-container">
-                <img src="./Flute2.png" style="background-color: #41230d; border-radius: 13px 0px 0px 13px;">
-            </div>
+        <div class="flute-container">
+            <img src="./Flute2.png" style="background-color: #41230d; border-radius: 13px 0px 0px 13px;">
+        </div>
 
         <div class="card p-4">
             <div class="form-row">
@@ -21,16 +23,16 @@
                     <label for="from-scale" style="font-size: 1.5em;">Scale I Have :</label>
                     <select id="from-scale" class="form-control" style="font-size: 1.5em;">
                         <option value="C">C</option>
-                        <option disabled value="C#">C#</option>
+                        <option value="C#">C#</option>
                         <option value="D">D</option>
-                        <option disabled value="D#">D#</option>
+                        <option value="D#">D#</option>
                         <option value="E">E</option>
                         <option value="F">F</option>
-                        <option disabled value="F#">F#</option>
+                        <option value="F#">F#</option>
                         <option value="G">G</option>
-                        <option disabled value="G#">G#</option>
+                        <option value="G#">G#</option>
                         <option value="A">A</option>
-                        <option disabled value="A#">A#</option>
+                        <option value="A#">A#</option>
                         <option value="B">B</option>
                     </select>
                 </div>
@@ -45,27 +47,37 @@
 
         <div class="card mt-4 p-4">
             <div class="form-group">
-                <label for="input-notation" class="d-flex justify-content-between align-items-center" style="font-size: 1.5em;">
+                <label for="input-notation" class="d-flex justify-content-between align-items-center"
+                    style="font-size: 1.5em;">
                     Input Notation :
                     <button id="copy-input-button" class="button d-flex align-items-center ml-2">
                         <span class="mr-1">&#128203;</span> Copy
                     </button>
-                </label>                
-                <textarea id="input-notation" class="form-control" rows="4" Style="font-size: 1.5em; font-weight: bold;"></textarea>
+                </label>
+                <textarea id="input-notation" class="form-control" rows="4"
+                    Style="font-size: 1.5em; font-weight: bold;"></textarea>
             </div>
             <div class="form-group">
-                <label for="output-notation" class="d-flex justify-content-between align-items-center" style="font-size: 1.5em;">
+                <label for="output-notation" class="d-flex justify-content-between align-items-center"
+                    style="font-size: 1.5em;">
                     Output Notation :
                     <button id="copy-output-button" class="button d-flex align-items-center ml-2">
                         <span class="mr-1">&#128203;</span> Copy
                     </button>
-                </label>                
-                <textarea id="output-notation" class="form-control" rows="4" readonly Style="font-size: 1.5em; font-weight: bold;"></textarea>
+                </label>
+                <textarea id="output-notation" class="form-control" rows="4" readonly
+                    Style="font-size: 1.5em; font-weight: bold;"></textarea>
             </div>
             <a href="./flute.html" class="styled-link" style="text-decoration: none;">Go to Fingers</a>
 
         </div>
     </div>
+
+    <!-- Loader overlay -->
+    <div class="loader-overlay">
+        <div class="loader"></div>
+    </div>
+
 
     <!-- Bootstrap JS and dependencies -->
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
@@ -74,4 +86,5 @@
 
     <script src="javascript/script.js"></script>
 </body>
+
 </html>

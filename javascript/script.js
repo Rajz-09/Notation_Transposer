@@ -65,7 +65,7 @@ function transposeNotesWithOctave(notes, interval) {
         const baseSwara = note.replace(/['|,]+/g, ''); // Extract base swara
         const octaveIndicator = note.replace(baseSwara, ''); // Extract octave symbols
         const westernNote = swaraToWestern[baseSwara];
-        
+
         if (!westernNote) return note; // Skip if not a valid swara
 
         const originalIndex = westernNotes.indexOf(westernNote);
@@ -102,6 +102,34 @@ document.getElementById('convert-button').addEventListener('click', () => {
 
     // Set the output notation.
     document.getElementById('output-notation').value = outputLines.join('\n');
+});
+
+// Loader display on convert button click
+document.getElementById("convert-button").addEventListener("click", function() {
+    const loaderOverlay = document.createElement("div");
+    loaderOverlay.classList.add("loader-overlay");
+
+    const loader = document.createElement("div");
+    loader.classList.add("loader");
+    loaderOverlay.appendChild(loader);
+
+    // Append the loader overlay within the container
+    document.querySelector(".container").appendChild(loaderOverlay);
+
+    // Show the loader overlay
+    loaderOverlay.style.display = "flex";
+
+    // Hide the loader overlay after 3 seconds and scroll to output
+    setTimeout(() => {
+        loaderOverlay.style.display = "none";
+        loaderOverlay.remove(); // Remove from DOM after hiding
+
+        // Scroll to the output notation textarea
+        document.getElementById("output-notation").scrollIntoView({
+            behavior: "smooth",
+            block: "center"
+        });
+    }, 2000);
 });
 
 // Event listener for pressing 'Enter' key in the input field.
