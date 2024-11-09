@@ -43,11 +43,20 @@ function updateToScaleOptions(fromScaleRoot) {
     const toScaleSelect = document.getElementById('to-scale');
     toScaleSelect.innerHTML = ''; // Clear existing options.
 
+    // Generate the Western notes for the scale based on the selected root and major scale pattern
     const derivedScale = generateScale(fromScaleRoot, majorPattern);
+
+    // Reverse the swaraToWestern mapping for easy lookup of swaras by Western notes
+    const westernToSwaraMap = Object.fromEntries(
+        Object.entries(swaraToWestern).map(([swara, note]) => [note, swara])
+    );
+
+    // Add each note in the derived scale with its corresponding swara to the dropdown
     derivedScale.forEach(note => {
+        const swara = westernToSwaraMap[note] || 'N/A'; // Retrieve the corresponding swara
         const option = document.createElement('option');
         option.value = note;
-        option.textContent = note;
+        option.textContent = `${note} - ${swara}`; // Display Western note and swara
         toScaleSelect.appendChild(option);
     });
 }
