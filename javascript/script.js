@@ -19,15 +19,6 @@ function rotateArray(array, startNote) {
     return array.slice(startIndex).concat(array.slice(0, startIndex));
 }
 
-// Function to create a key-value mapping of classical swar to adjusted western notes
-function createMapping(rotatedWesternNotes) {
-    const mapping = {};
-    for (let i = 0; i < classicalSwar.length; i++) {
-        mapping[classicalSwar[i]] = rotatedWesternNotes[i];
-    }
-    return mapping;
-}
-
 // Function to generate a scale based on a given root and pattern
 function generateScale(root, pattern) {
     const rotatedNotes = rotateArray(westernNotes, root);
@@ -57,8 +48,9 @@ function updateToScaleOptions(fromScaleRoot) {
     // Populate the 'to-scale' dropdown with the generated scale
     derivedScale.forEach(note => {
         const option = document.createElement('option');
+        const classicalSwara = westernToSwara[note] || ''; // Get corresponding swara
         option.value = note;
-        option.textContent = note;
+        option.textContent = `${note} - ${classicalSwara}`;
         toScaleSelect.appendChild(option);
     });
 
@@ -87,42 +79,20 @@ function transposeNotesWithOctave(notes, interval) {
     });
 }
 
-// Populate the "from-scale" dropdown and set the default selection to 'C'
+// Populate the "to-scale" dropdown based on a default "from-scale"
 window.onload = () => {
+    const defaultFromScale = 'C'; // Set default "from-scale"
+    updateToScaleOptions(defaultFromScale);
+
     const fromScaleDropdown = document.getElementById('from-scale');
-    westernNotes.forEach(note => {
-        const option = document.createElement('option');
-        option.value = note;
-        option.textContent = note;
-        fromScaleDropdown.appendChild(option);
-    });
-
-    // Set the default selection to 'C'
-    fromScaleDropdown.value = 'C';
-
-    // Update the 'to-scale' dropdown based on the default 'from-scale' selection
-    updateToScaleOptions('C');
-
     fromScaleDropdown.addEventListener('change', (event) => {
         const selectedRoot = event.target.value;
         updateToScaleOptions(selectedRoot); // Update 'to-scale' based on selected 'from-scale'
     });
 };
 
-// Function to convert scales based on the selected 'from' and 'to' scales
-document.getElementById('convert-button').onclick = () => {
-    const fromScale = document.getElementById('from-scale').value;
-    const toScale = document.getElementById('to-scale').value;
-    const inputNotation = document.getElementById('input-notation').value.trim().split(' ');
-    const outputTextarea = document.getElementById('output-notation');
-
-    // Validate selection and input
-    if (!fromScale || !toScale || inputNotation.length === 0) {
-        alert('Please select both scales and provide input notation.');
-        return;
-    }
-
-    // Create and show the loader overlay
+// Add loader display and perform conversion after loader timeout
+document.getElementById("convert-button").addEventListener("click", function () {
     const loaderOverlay = document.createElement("div");
     loaderOverlay.classList.add("loader-overlay");
 
@@ -136,60 +106,67 @@ document.getElementById('convert-button').onclick = () => {
     // Show the loader overlay
     loaderOverlay.style.display = "flex";
 
-    // Delay the output generation until the loader finishes
+    // Delay conversion and output rendering until the loader timeout ends
     setTimeout(() => {
-        // Step 1: Rotate the westernNotes array starting from the selected 'from-scale'
-        const rotatedWesternNotes = rotateArray(westernNotes, fromScale);
-
-        // Step 2: Create the key-value mapping of classical swar to adjusted western notes
-        const swarMapping = createMapping(rotatedWesternNotes);
-
-        // Step 3: Find the interval between from-scale and to-scale
-        const interval = westernNotes.indexOf(toScale) - westernNotes.indexOf(fromScale);
-
-        // Step 4: Transpose input notation with octave indicators
-        const transposedNotes = transposeNotesWithOctave(inputNotation, interval);
-
-        // Display the output notation
-        outputTextarea.value = transposedNotes.join(' ');
-
-        // Remove loader overlay
         loaderOverlay.style.display = "none";
-        loaderOverlay.remove();
+        loaderOverlay.remove(); // Remove from DOM after hiding
 
         // Scroll to the output notation textarea
-        outputTextarea.scrollIntoView({
+        document.getElementById("output-notation").scrollIntoView({
             behavior: "smooth",
             block: "center"
         });
-    }, 2000); // Delay of 2 seconds
-};
 
-// Event listener for pressing 'Enter' key in the input field
+        // Perform the conversion and render the output
+        const fromScale = document.getElementById('from-scale').value;
+        const toScale = document.getElementById('to-scale').value;
+        const inputNotation = document.getElementById('input-notation').value.trim();
+        const outputTextarea = document.getElementById('output-notation');
+
+        // Validate selection and input
+        if (!fromScale || !toScale || inputNotation.length === 0) {
+            alert('Please select both scales and provide input notation.');
+            return;
+        }
+
+        // Calculate the transposition interval
+        const interval = westernNotes.indexOf(toScale) - westernNotes.indexOf(fromScale);
+
+        // Handle multi-line input notation
+        const lines = inputNotation.split('\n');
+        const outputLines = lines.map(line => {
+            const words = line.split(' ');
+            const transposedWords = transposeNotesWithOctave(words, interval);
+            return transposedWords.join(' ');
+        });
+
+        // Display the output notation
+        outputTextarea.value = outputLines.join('\n');
+    }, 2000); // Match loader timeout duration
+});
+
+// Add event listener for 'Enter' key in the input field
 document.getElementById('input-notation').addEventListener('keydown', (event) => {
     if (event.key === 'Enter') {
-        event.preventDefault(); // Prevents a new line from being added in the text area.
-        document.getElementById('convert-button').click(); // Simulates a click on the convert button.
+        event.preventDefault(); // Prevents a new line from being added in the text area
+        document.getElementById('convert-button').click(); // Simulates a click on the convert button
     }
 });
 
-// Function to copy text to clipboard and change button appearance
+// Add copy-to-clipboard functionality
 function copyToClipboard(buttonId, textAreaId) {
     const textArea = document.getElementById(textAreaId);
     textArea.select();
     document.execCommand('copy');
 
-    // Change button text and icon to indicate the text was copied
     const button = document.getElementById(buttonId);
     button.innerHTML = '<span class="mr-1">&#10003;</span> Copied';
 
-    // Reset the button text and icon back to the original after 2 seconds
     setTimeout(() => {
         button.innerHTML = '<span class="mr-1">&#128203;</span> Copy';
     }, 2000);
 }
 
-// Event listeners for copy buttons
 document.getElementById('copy-input-button').addEventListener('click', () => {
     copyToClipboard('copy-input-button', 'input-notation');
 });
