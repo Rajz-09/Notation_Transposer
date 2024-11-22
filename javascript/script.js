@@ -174,3 +174,4 @@ document.getElementById('copy-input-button').addEventListener('click', () => {
 document.getElementById('copy-output-button').addEventListener('click', () => {
     copyToClipboard('copy-output-button', 'output-notation');
 });
+

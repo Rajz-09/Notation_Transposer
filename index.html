@@ -7,6 +7,7 @@
     <title>Flute Notation Converter</title>
     <!-- Bootstrap CSS -->
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
     <link rel="stylesheet" href="css/style.css">
 </head>
 
@@ -14,7 +15,7 @@
     <div class="container mt-5">
         <h1>SWAR PARIVRITTI</h1>
         <div class="flute-container">
-            <img src="./Flute2.png" style="background-color: #41230d; border-radius: 13px 0px 0px 13px;">
+            <img src="./Flute2.png" style="background-color: #41230d; border-radius: 13px 13px 13px 13px;">
         </div>
 
         <div class="card p-4">
@@ -42,7 +43,13 @@
                     </select>
                 </div>
             </div>
-            <button id="convert-button" class="button">Convert</button>
+            <button id="convert-button" class="button">Convert Scale</button>
+            <div class="guide-button">
+                <a href="./guide.html">
+                    <i class="fas fa-headset"></i>
+                    <span class="tooltip">User Guide</span>
+                  </a>
+            </div>
         </div>
 
         <div class="card mt-4 p-4">
@@ -68,8 +75,9 @@
                 <textarea id="output-notation" class="form-control" rows="4" readonly
                     Style="font-size: 1.5em; font-weight: bold;"></textarea>
             </div>
+            
             <a href="./flute.html" class="styled-link" style="text-decoration: none;">Go to Fingers</a>
-
+            
         </div>
     </div>
 
