@@ -158,9 +158,13 @@ textarea {
     }
 
     .flute-container img {
-        height: 20%;
-        width: 63%;
+        height: 30%;
+        width: 97%;
 
+    }
+
+    .flute-container{
+        height: 2rem;
     }
 }
 
@@ -193,7 +197,7 @@ textarea {
 
     .flute-container img {
         height: 50%;
-        width: 63%;
+        width: 97%;
 
     }
 }
@@ -227,7 +231,7 @@ textarea {
 
     .flute-container img {
         height: 50%;
-        width: 63%;
+        width: 97%;
 
     }
 }
@@ -269,7 +273,7 @@ textarea {
 
     .flute-container img {
         height: 50%;
-        width: 63%;
+        width: 97%;
     }
 
     .styled-link {
