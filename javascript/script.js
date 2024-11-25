@@ -91,6 +91,8 @@ window.onload = () => {
     });
 };
 
+let convertButtonClickCount = 0; // Counter for "Convert" button clicks
+
 // Add loader display and perform conversion after loader timeout
 document.getElementById("convert-button").addEventListener("click", function () {
     const loaderOverlay = document.createElement("div");
@@ -142,6 +144,18 @@ document.getElementById("convert-button").addEventListener("click", function () 
 
         // Display the output notation
         outputTextarea.value = outputLines.join('\n');
+
+        // Increment the click count
+        convertButtonClickCount++;
+
+        // If the button has been clicked twice, trigger subscription routing
+        if (convertButtonClickCount > 1) {
+            // Redirect to subscription page or display subscription section
+            window.location.href = 'subscriptionPlan.html';  // Replace with actual URL or route for subscription
+            // Or if it's a display instead of a redirect:
+            // document.getElementById('subscription-section').style.display = 'block'; // Show subscription section
+        }
+
     }, 2000); // Match loader timeout duration
 });
 
@@ -174,4 +188,3 @@ document.getElementById('copy-input-button').addEventListener('click', () => {
 document.getElementById('copy-output-button').addEventListener('click', () => {
     copyToClipboard('copy-output-button', 'output-notation');
 });
-

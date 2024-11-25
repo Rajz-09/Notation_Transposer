@@ -1,0 +1,122 @@
+/* General Reset */
+body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Poppins', sans-serif;
+    color: #333;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Header */
+header {
+    text-align: center;
+    padding: 20px 0;
+    color: #005b99;
+    font-size: 2.5rem;
+    font-weight: bold;
+}
+
+h1 {
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+    margin-bottom: 0px;
+}
+
+/* Plan Container */
+.plan-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: stretch;
+    gap: 40px;
+    margin-bottom: 40px;
+    padding: 20px 40px; /* Add padding for better spacing */
+    box-sizing: border-box;
+    flex: 1;
+}
+
+/* Plan Card */
+.plan-card {
+    flex: 1; /* Cards equally split the available space */
+    background: linear-gradient(135deg, #ccf2ff, #eaf9ff);
+    border-radius: 15px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between; /* Ensures content is evenly spaced */
+    text-align: center;
+    padding: 40px 20px; /* Increase padding for content fit */
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    height: auto;
+    min-height: 400px; /* Ensures consistent card size */
+}
+
+.plan-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 12px rgba(0, 0, 0, 0.2);
+}
+
+/* Plan Card Heading */
+.plan-card h2 {
+    font-size: 2rem;
+    color: #004c8c;
+    margin-bottom: 20px;
+}
+
+/* Plan Card Description */
+.plan-card p {
+    font-size: 1.5rem;
+    color: #003d66;
+    margin: 10px 0;
+    line-height: 1.5;
+}
+
+.plan-card p strong {
+    font-size: 2.5rem;
+    color: #005b99;
+    display: block;
+    margin: 15px 0;
+}
+
+/* Subscribe Button */
+.plan-card button {
+    padding: 15px 25px;
+    font-size: 1rem;
+    color: #fff;
+    background: #007acc;
+    border: none;
+    border-radius: 25px;
+    cursor: pointer;
+    transition: background 0.3s ease, transform 0.2s ease;
+}
+
+.plan-card button:hover {
+    background: #005b99;
+    transform: scale(1.05);
+}
+
+/* Responsive Design */
+@media (max-width: 1024px) {
+    .plan-container {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .plan-card {
+        max-width: 80%;
+        margin-bottom: 20px;
+    }
+
+    .plan-card h2 {
+        font-size: 1.8rem;
+    }
+
+    .plan-card p {
+        font-size: 1rem;
+    }
+
+    .plan-card p strong {
+        font-size: 2rem;
+    }
+}

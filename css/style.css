@@ -2,7 +2,7 @@
 body {
     font-family: 'Poppins', sans-serif;
     background-color: #e0f7fa;
-    margin: 0;
+    margin: 100px 0px 0px 0px;
     padding: 0;
 }
 
@@ -152,9 +152,9 @@ textarea {
     button#copy-output-button {
         font-size: 0.7em;
         padding: 3px;
-        width: 30%;
         justify-content: center;
         box-shadow: none;
+        width: auto;
     }
 
     .flute-container img {
@@ -187,8 +187,8 @@ textarea {
     button#copy-output-button {
         font-size: 0.9em;
         padding: 5px;
-        width: 60%;
         box-shadow: none;
+        width: auto;
     }
 
     .flute-container img {
@@ -221,8 +221,8 @@ textarea {
     button#copy-output-button {
         font-size: 1em;
         padding: 6px;
-        width: 50%;
         box-shadow: none;
+        width: auto;
     }
 
     .flute-container img {
