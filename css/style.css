@@ -1,13 +1,20 @@
 /* Body Styling for All Screens */
+
+
 body {
     font-family: 'Poppins', sans-serif;
     background-color: #e0f7fa;
-    margin: 100px 0px 0px 0px;
+    margin: 0;
     padding: 0;
 }
 
+body, html {
+    height: 100%;
+    margin: 0;
+}
+
 /* Container Styling */
-.container {
+ /* .container {
     max-width: 80%;
     margin: 50px auto;
     background: linear-gradient(135deg, #b2dfdb, #80deea);
@@ -16,26 +23,46 @@ body {
     border-radius: 15px;
     border: 2px solid #004d40;
     height: calc(100vh - 100px);
-    /* Adjust container height relative to viewport height */
     overflow-y: auto;
-    /* Add scrolling inside the container if content overflows */
+    margin-top: 100px;
+}  */
+
+ .container {
+    position: fixed;
+    top: 48.3%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    max-width: 80%;
+    background: linear-gradient(135deg, #b2dfdb, #80deea);
+    padding: 30px;
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.3);
+    border-radius: 15px;
+    border: 2px solid #004d40;
+    height: calc(100vh - 100px);
+    overflow-y: auto;
+    box-sizing: border-box;
+    scrollbar-width: none; 
+    -ms-overflow-style: none;
 }
+
+.container::-webkit-scrollbar {
+    display: none; 
+} 
+
 
 .flute-container {
     display: flex;
     justify-content: center;
     align-items: center;
     height: 4.5rem;
-    /* Match this to h1 font-size */
     margin-bottom: 20px;
-    /* Optional: Adds some space between the image and the content below */
 }
 
 .flute-container img {
     transform: rotate(180deg);
     height: 50%;
     /* Ensure the height of the image matches the container height */
-    width: 63%;
+    width: 100%;
     max-height: 4.5rem;
     /* Ensure the image does not exceed the height of the heading */
 }
@@ -163,7 +190,7 @@ textarea {
 
     }
 
-    .flute-container{
+    .flute-container {
         height: 2rem;
     }
 }
@@ -198,7 +225,10 @@ textarea {
     .flute-container img {
         height: 50%;
         width: 97%;
+    }
 
+    .flute-container {
+        height: 2rem;
     }
 }
 
@@ -232,7 +262,10 @@ textarea {
     .flute-container img {
         height: 50%;
         width: 97%;
+    }
 
+    .flute-container {
+        height: 3rem;
     }
 }
 
@@ -276,6 +309,10 @@ textarea {
         width: 97%;
     }
 
+    .flute-container {
+        height: 3rem;
+    }
+
     .styled-link {
         font-size: 1.8em;
     }
@@ -300,9 +337,8 @@ textarea {
     }
 
     #convert-button {
-        padding: 15px 30px;
         font-size: 1.8em;
-        font-weight: 700;
+        font-weight: 500;
     }
 
     textarea {
@@ -319,7 +355,10 @@ textarea {
     .flute-container img {
         height: 50%;
         width: 63%;
+    }
 
+    .flute-container {
+        height: 3rem;
     }
 
     .styled-link {
@@ -328,7 +367,7 @@ textarea {
 }
 
 /* Loader styles */
-.loader-overlay {
+/* .loader-overlay {
     position: fixed;
     top: 0;
     left: 0;
@@ -340,7 +379,35 @@ textarea {
     justify-content: center;
     z-index: 1000;
     display: none;
-    /* Hidden by default */
+    /* Hidden by default 
+} */
+
+.main-container {
+    position: relative;
+    /* Ensures loader is positioned relative to this container */
+    width: 100%;
+    height: 100%;
+}
+
+/* Loader overlay */
+.loader-overlay {
+    position: absolute;
+    /* Positioned relative to main container */
+    top: 0;
+    left: 0;
+    width: 100%;
+    /* Full width of the container */
+    height: 100%;
+    /* Full height of the container */
+    background-color: rgba(255, 255, 255, 0.8);
+    /* Transparent overlay */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+    /* Ensure it's on top */
+    visibility: hidden;
+    /* Initially hidden until needed */
 }
 
 .loader {
@@ -350,8 +417,15 @@ textarea {
     width: 60px;
     height: 60px;
     animation: spin 1s linear infinite;
+    width: 50px;
+    height: 50px;
+    border: 5px solid #f3f3f3;
+    border-top: 5px solid #3498db;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
 }
 
+/* Loader animation */
 @keyframes spin {
     0% {
         transform: rotate(0deg);
@@ -362,15 +436,21 @@ textarea {
     }
 }
 
+/* Content area styling */
+.content-container {
+    padding: 20px;
+    overflow-y: auto;
+    /* Allow scrolling */
+    height: calc(100% - 40px);
+    /* Adjust based on padding */
+}
+
 /* Guide Button */
 .guide-button {
     position: fixed;
-    top: 20px;
-    /* Adjust vertical positioning */
-    right: 20px;
-    /* Adjust horizontal positioning */
+    top: 12px;
+    right: 15px;
     z-index: 1000;
-    /* Ensure it stays on top */
 }
 
 .guide-button a {
@@ -378,61 +458,40 @@ textarea {
     align-items: center;
     justify-content: center;
     width: 60px;
-    /* Button size */
     height: 60px;
     background: linear-gradient(45deg, #007bff, #00d1b2);
-    /* Modern gradient */
     border-radius: 50%;
-    /* Circular button */
     color: white;
-    /* Icon color */
     font-size: 1.5rem;
-    /* Icon size */
     text-decoration: none;
-    /* Remove underline */
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    /* Subtle shadow */
     transition: transform 0.3s ease, box-shadow 0.3s ease;
-    /* Smooth hover effect */
 }
 
 .guide-button a:hover {
     transform: scale(1.05);
     box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
-    /* Deeper shadow on hover */
 }
 
 /* Tooltip Styling */
 .guide-button .tooltip {
     visibility: hidden;
-    /* Hidden by default */
     opacity: 0;
-    /* Transparent by default */
     position: absolute;
-    bottom: -30px;
-    /* Position tooltip below the button */
-    left: 50%;
-    /* Center horizontally */
+    bottom: -35px;
+    left: calc(50% - 7px); /* Adjust left to mimic margin-right */
     transform: translateX(-50%);
-    /* Adjust alignment */
     background: #333;
-    /* Dark background */
     color: white;
-    /* White text */
     padding: 5px 10px;
     border-radius: 5px;
-    /* Rounded corners */
     font-size: 0.9rem;
-    /* Slightly smaller font */
     white-space: nowrap;
-    /* Prevent text wrap */
     transition: visibility 0s, opacity 0.3s ease-in-out;
     /* Smooth fade-in */
 }
 
 .guide-button a:hover .tooltip {
     visibility: visible;
-    /* Show on hover */
     opacity: 1;
-    /* Fully visible */
 }
